@@ -25,14 +25,25 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
         this.mContext = mContext;
     }
 
-    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View studentView = inflater.inflate(R.layout.student_item,
-                parent, false);
+        View studentView = null;
+
+        switch (viewType) {
+            case TYPE1:
+                studentView =
+                        inflater.inflate(R.layout.student_item,
+                                parent, false);
+                break;
+            case TYPE2:
+                studentView =
+                        inflater.inflate(R.layout.student_item2,
+                                parent, false);
+                break;
+        }
 
         MyViewHolder viewHolder = new MyViewHolder(studentView);
         return viewHolder;
@@ -45,6 +56,31 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.MyViewHo
 
         holder.studentname.setText(student.getsName());
         holder.birthyear.setText(student.getAge() + "");
+    }
+
+    //Hằng số hai kiểu hiện thị phần tử
+
+    public static final int TYPE1 = 0;
+    public static final int TYPE2 = 1;
+
+    /**
+     * Những phần tử chia hết cho 3 có kiểu 1, còn lại kiểu 0
+     */
+
+//    @Override
+//    public int getItemViewType(int position) {
+//        if (position % 3 == 0)
+//            return TYPE2;
+//        else
+//            return TYPE1;
+//    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position % 3 == 0)
+            return TYPE2;
+        else
+            return TYPE1;
     }
 
     @Override
